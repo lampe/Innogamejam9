@@ -7,6 +7,7 @@ function Player(options) {
   }
   that.add = function () {
     that.sprite = game.add.sprite(that.options.position.x, that.options.position.y, that.options.name);
+    that.sprite.update = that.update;
     that.sprite.anchor.setTo(0.5, 0.5);
     game.physics.enable(that.sprite, Phaser.Physics.ARCADE);
     that.sprite.body.collideWorldBounds = true;
@@ -21,6 +22,22 @@ function Player(options) {
     that.add();
     that.basicyCycle();
     that.play();
+  }
+  that.update = function () {
+    if (game.player.sprite.alive) {
+      game.player.sprite.body.velocity.x = 0;
+      game.player.sprite.body.velocity.y = 0;
+      if (game.player.cursors.left.isDown) {
+        game.player.sprite.body.velocity.x = -game.player.options.speed;
+      } else if (game.player.cursors.right.isDown) {
+        game.player.sprite.body.velocity.x = game.player.options.speed;
+      }
+      if (game.player.cursors.up.isDown) {
+        game.player.sprite.body.velocity.y = -game.player.options.speed;
+      } else if (game.player.cursors.down.isDown) {
+        game.player.sprite.body.velocity.y = game.player.options.speed;
+      }
+    }
   }
   return that;
 }

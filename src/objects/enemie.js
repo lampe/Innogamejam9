@@ -6,6 +6,10 @@ function Enemie(options) {
   }
   that.add = function () {
     that.sprite = game.add.sprite(that.options.position.x, that.options.position.y, that.options.name);
+    that.sprite.anchor.setTo(0.5, 0.5);
+    game.physics.enable(that.sprite, Phaser.Physics.ARCADE);
+    that.sprite.body.setSize(game.player.sprite.body.width * that.options.hitBoxScale , game.player.sprite.body.height * that.options.hitBoxScale , 0, 0);
+    that.sprite.body.immovable = true;
   }
   that.basicyCycle = function () {
     that.sprite.animations.add('basic');

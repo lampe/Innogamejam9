@@ -15,8 +15,31 @@ function init() {
     path: 'assets/tmp/testpngbw',
     position: {
       x: 32,
-      y: 32
+      y: 70
     },
+    frameRate: 10,
+  });
+
+  game.enemie = new Enemie({
+    speed: 150,
+    name: "player1",
+    path: 'assets/tmp/testpngbw',
+    position: {
+      x: 100,
+      y: 50
+    },
+    hitBoxScale: 0.5,
+    frameRate: 10,
+  });
+  game.enemie2 = new Enemie({
+    speed: 150,
+    name: "player1",
+    path: 'assets/tmp/testpngbw',
+    position: {
+      x: 100,
+      y: 100
+    },
+    hitBoxScale: 0.9,
     frameRate: 10,
   });
 }
@@ -24,32 +47,36 @@ function init() {
 function preload() {
   // load the player asset
   game.player.load();
+  game.enemie.load();
+  game.enemie2.load();
+
   game.stage.backgroundColor = gb.c1;
 }
 
 function create() {
   // add the player, add the basic animation and play it
   game.player.setup();
+  game.enemie.setup();
+  game.enemie2.setup();
+
 }
 
 function update() {
-  // console.log(game.player.cursors.left.isDown);
-  game.player.sprite.body.velocity.x = 0;
-  game.player.sprite.body.velocity.y = 0;
-  if (game.player.cursors.left.isDown) {
-    game.player.sprite.body.velocity.x = - game.player.options.speed;
-  } else if (game.player.cursors.right.isDown) {
-    game.player.sprite.body.velocity.x = game.player.options.speed;
+  game.physics.arcade.collide(game.player.sprite, game.enemie.sprite, function(){
+    console.log("asdasdasds");
+  }, null, this);
+
+  // update the player is he is alive
+  if (game.player.sprite.alive) {
+    // game.player.update();
   }
-  if (game.player.cursors.up.isDown) {
-    game.player.sprite.body.velocity.y = -game.player.options.speed;
-  } else if (game.player.cursors.down.isDown) {
-    game.player.sprite.body.velocity.y = game.player.options.speed;
-  }
+
 }
 
 function render() {
-
+  game.debug.body(game.player.sprite);
+  game.debug.body(game.enemie.sprite);
+  game.debug.body(game.enemie2.sprite);
   // draw the gameboy like img
   gb.draw();
 }
