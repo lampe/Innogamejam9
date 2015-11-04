@@ -7,6 +7,8 @@ var game = new Phaser.Game(160, 144, Phaser.CANVAS, 'gamejam8', {
 });
 
 function init() {
+  game.load.spritesheet('bullet', 'assets/tmp/bullet.png', 32, 32);
+
   // setup gameboy like rendering
   gb.setup();
   game.player = new Player({
@@ -19,6 +21,8 @@ function init() {
     },
     frameRate: 10,
   });
+  game.player.bp = new BulletPool();
+  bp2 = new BulletPool();
 
   game.enemie = new Enemie({
     speed: 150,
@@ -49,7 +53,7 @@ function preload() {
   game.player.load();
   game.enemie.load();
   game.enemie2.load();
-
+  game.player.bp.preload();
   game.stage.backgroundColor = gb.c1;
 }
 
@@ -58,25 +62,21 @@ function create() {
   game.player.setup();
   game.enemie.setup();
   game.enemie2.setup();
-
+  game.player.bp.load();
+  bp2.load()
 }
 
 function update() {
-  game.physics.arcade.collide(game.player.sprite, game.enemie.sprite, function(){
-    console.log("asdasdasds");
-  }, null, this);
-
-  // update the player is he is alive
-  if (game.player.sprite.alive) {
-    // game.player.update();
-  }
-
+  game.physics.arcade.collide(game.player.sprite, game.enemie.sprite, function () {}, null, this);
 }
 
 function render() {
   game.debug.body(game.player.sprite);
   game.debug.body(game.enemie.sprite);
   game.debug.body(game.enemie2.sprite);
+  if (game.player.bp.bullet && game.player.bp.bullet.alive) {
+    game.debug.body(game.player.bp.bullet);
+  }
   // draw the gameboy like img
   gb.draw();
 }
