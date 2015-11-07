@@ -1,0 +1,28 @@
+{"frames": {
+
+"w_head_idle1.png":
+{
+	"frame": {"x":0,"y":0,"w":64,"h":54},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":54},
+	"sourceSize": {"w":64,"h":54}
+},
+"w_head_idle2.png":
+{
+	"frame": {"x":64,"y":0,"w":64,"h":54},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":54},
+	"sourceSize": {"w":64,"h":54}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "w_head_idle.png",
+	"format": "RGBA8888",
+	"size": {"w":128,"h":54},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:d4602d17a8d88dc8767800a19294f5cc:a5756928f7535f1a00ad2bacd61f0c99:ace3e80b623f3e1c4f873299d9a57f57$"
+}
+}

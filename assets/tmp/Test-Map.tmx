@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="50" tilewidth="16" tileheight="16" nextobjectid="1">
+ <tileset firstgid="1" name="KirbysDreamLand_EDIT" tilewidth="16" tileheight="16" spacing="2" margin="2" tilecount="512">
+  <image source="../Inspiration/KirbysDreamLand_EDIT.png" width="578" height="290"/>
+ </tileset>
+ <layer name="Hintergrund" width="100" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt0c1twkAQBtB1cqMLkkqgEyMqSC1pgDtVJfy0wR4ShSz2eo1tZKH3pE94WM3MWg4BAAAAAADguXzIrLKTWWVfhbD9+R2SrhlDd+T6p5w95p4x55TM+Ay3z219q9Bv9tD3uKe3raeKeYl5HfGOad9XrL8zs5rO0//S75GeX9d1w/nvnXJ9pXfpun/JzLYZy/j8FvPeY0fpu53j8yHmGHMKf/X5Kk3nfXtWSV0ndW5XV33P/Utm5masq/+7umaW7q2rByXd9cjdE2Qz0dxFkDkFAAAAAAAAAAAAYGwXOCq1/g==
+  </data>
+ </layer>
+ <objectgroup name="Sprites"/>
+ <layer name="Vordergrund" width="100" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt0cERQEAQRNHdVBAJskNkyEkHwNUe9r2qf5pLV00pAAAAAAAAAN+2Wsqejtp6ST+GNKbp5XbmD1e6/eM3c1rS2noIAAAAAAAAAAAAAABdeAD/NAVB
+  </data>
+ </layer>
+</map>

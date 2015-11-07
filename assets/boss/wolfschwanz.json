@@ -1,0 +1,44 @@
+{"frames": {
+
+"Schwanz1.png":
+{
+	"frame": {"x":2,"y":2,"w":44,"h":60},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":0,"w":44,"h":60},
+	"sourceSize": {"w":44,"h":60}
+},
+"Schwanz2.png":
+{
+	"frame": {"x":176,"y":2,"w":93,"h":42},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":18,"y":23,"w":93,"h":42},
+	"sourceSize": {"w":117,"h":65}
+},
+"Schwanz3.png":
+{
+	"frame": {"x":48,"y":2,"w":65,"h":48},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":8,"w":65,"h":48},
+	"sourceSize": {"w":117,"h":65}
+},
+"Schwanz4.png":
+{
+	"frame": {"x":115,"y":2,"w":59,"h":43},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":6,"y":13,"w":59,"h":43},
+	"sourceSize": {"w":117,"h":65}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "wolfschwanz.png",
+	"format": "RGBA8888",
+	"size": {"w":271,"h":64},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:c0b3a6ab99b82137a99ca7ac1bf82ea9:0e8661a6e7e88b327fd62c0827d0aca0:f78087bf7bf3b7d943a85e915575d51b$"
+}
+}

@@ -1,0 +1,36 @@
+{"frames": {
+
+"cs_t_1.png":
+{
+	"frame": {"x":0,"y":0,"w":74,"h":66},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":74,"h":66},
+	"sourceSize": {"w":74,"h":66}
+},
+"cs_t_2.png":
+{
+	"frame": {"x":74,"y":0,"w":74,"h":66},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":74,"h":66},
+	"sourceSize": {"w":74,"h":66}
+},
+"cs_t_3.png":
+{
+	"frame": {"x":148,"y":0,"w":74,"h":66},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":74,"h":66},
+	"sourceSize": {"w":74,"h":66}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "cs_tortillo.png",
+	"format": "RGBA8888",
+	"size": {"w":222,"h":66},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:0c6368c665092d5b5be825b9d4194b14:eb99eb152ca69f1e55184ecd69ba5799:7f438f519f24931d81f2661934e3d749$"
+}
+}

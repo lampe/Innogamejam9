@@ -3,9 +3,15 @@ function Enemie(options) {
   enemie.options = options;
   enemie.alive = false;
   enemie.bp = [];
+  enemie.options.life = options.life || 100
   enemie.preload = function () {
-
-    game.load.atlasJSONHash(this.options.name, this.options.path + '.png', this.options.path + '.json');
+    console.log(this.options.type);
+    if (this.options.type === "JSON") {
+      game.load.atlasJSONHash(this.options.name, this.options.path + '.png', this.options.path + '.json');
+    }
+    if (this.options.type === "sprite") {
+      game.load.image(this.options.name, this.options.path + '.png');
+    }
     for (var i = 0; i < this.bp.length; i++) {
       this.bp[i].preload();
     }
@@ -23,16 +29,25 @@ function Enemie(options) {
     for (var i = 0; i < this.bp.length; i++) {
       this.bp[i].load();
     }
-    this.callAll('body.setSize', 'body', this.children[0].body.width * enemie.options.hitBoxScale, this.children[0].body.height * enemie.options.hitBoxScale);
     return true;
     // enemie.setAll('outOfBoundsKill', true);
     // enemie.setAll('checkWorldBounds', true);
   }
-  enemie.spawn = function () {
+  enemie.spawn = function (options) {
+      options = options || {};
+      options.velocity = options.velocity || {
+        x: -23,
+        y: 0
+      };
+      options.x = options.x || game.width;
+      options.y = options.y || game.height / 2;
       this.enemie = this.getFirstExists(false);
-      this.enemie.body.setSize(10, 8, 3, 0);
-      this.enemie.reset(game.width, game.height / 2);
-      this.enemie.body.velocity.x = -23;
+      this.enemie.body.setSize(this.enemie.body.width * this.options.hitBoxScale, this.enemie.body.height * this.options.hitBoxScale);
+      this.enemie.reset(options.x || game.width, options.y || game.height / 2);
+      this.enemie.body.velocity.x = options.velocity.x;
+      this.enemie.body.velocity.y = options.velocity.y;
+
+      return this.enemie;
     }
     // enemie.basicyCycle = function () {
     // enemie.sprite.animations.add('basic');
@@ -51,18 +66,42 @@ function Enemie(options) {
       game.player.sprite,
       this,
       function (bullet, enemie) {
-        game.player.sprite.kill()
+        game.player.kill()
       },
       null,
       this
     );
     for (var i = 0; i < game.player.bp.length; i++) {
-      if(game.player.bp[i].options.isActiv){
+      if (game.player.bp[i].options.isActiv) {
         game.physics.arcade.overlap(
           game.player.bp[i],
           this,
           function (bullet, enemie) {
-            enemie.kill();
+            bullet.kill();
+            // if (enemie.key === "wolfPawL" || enemie.key === "wolfHead" || enemie.key === "wolfBooty") {
+            if (enemie.key === "wolfPawL") {
+
+              console.log(wolfLife);
+              if (wolfLife <= 0) {
+                  // wolfBooty.kill();
+                  // wolfHead.kill();
+                  wolfPawL.deadTween = game.add.tween(wolfPawL).to({y:"200"},3000, Phaser.Easing.Sinusoidal.Out, true,0).start()
+                  wolfPawL.deadTween.onComplete.add(function(){
+                      wolfPawL.kill();
+                  }, this);
+
+
+              }else{
+                if(wolfHead.hitTween.isRunning === true){
+                  return false;
+                }
+                wolfLife -= 10;
+                wolfBooty.hitTween = game.add.tween(wolfBooty).to({alpha:0},50, Phaser.Easing.Sinusoidal.Out, true,50, 2, true).start()
+                wolfPawL.hitTween = game.add.tween(wolfPawL).to({alpha:0},50, Phaser.Easing.Sinusoidal.Out, true,50, 2, true).start()
+                wolfHead.hitTween = game.add.tween(wolfHead).to({alpha:0},50, Phaser.Easing.Sinusoidal.Out, true,50, 2, true).start()
+              }
+            }
+
           },
           null,
           this
