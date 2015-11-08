@@ -169,12 +169,16 @@ function preload() {
   game.load.audio('hit', ['assets/audio/hit.wav']);
   game.load.audio('text', ['assets/audio/text.wav']);
   game.load.image('title', 'assets/title.png');
+  game.load.image('credit', 'assets/ui_credits_titel_A.png');
+
   game.load.image('background1', 'assets/bg/bg1.png');
   game.load.image('background2', 'assets/bg/bg2.png');
   game.load.image('background3', 'assets/bg/fg.png');
   game.load.image('bgInto', 'assets/bg/bg_intro.png');
   game.load.image("bgEnde", 'assets/ende/ende.png');
   game.load.image("pups", 'assets/ende/ende_pups.png');
+  game.load.image("HoboBoys", 'assets/ui_hoboboys.png');
+
   // this.load.tilemap('level1', 'assets/tmp/Test-Map.json', null, Phaser.Tilemap.TILED_JSON);
   // this.load.image('gameTiles', 'assets/tmp/KirbysDreamLand_EDIT.png');
   // load the player asset
@@ -184,14 +188,8 @@ function preload() {
 }
 shot = bg1 = game.fadeOut = game.fadeIn = bg2 = textAudio = hit = undefined;
 startIntro = function () {
-  game.phase = "intro";
   startupSound = game.add.audio('startup');
-
-  game.introText = game.add.text(game.width / 2, -10, '', {
-    font: "10px pokemon",
-    fill: "black"
-  });
-  game.introText.text = "HoboBoys©";
+  game.introText = game.add.sprite(game.width / 2, -10, 'HoboBoys');
   game.introText.position.x = game.width / 2 - game.introText.width / 2;
   game.introText.tweendown = game.add.tween(game.introText).to({
     y: game.height / 2 - 10
@@ -206,10 +204,18 @@ startIntro = function () {
       bg1.play();
       game.introBackground = this.game.add.sprite(0, 0, 'bgInto');
       game.title = this.game.add.sprite(0, 0, 'title');
+      game.credit = this.game.add.sprite(0,0, 'credit');
+      game.credit.position.x =  33;
+      game.credit.y = game.height - 12;
       game.title.alpha = 0;
+      game.credit.alpha = 0;
+
       game.add.tween(game.title).to({
         alpha: 1
-      },1000,Phaser.Easing.Linear.None,true,500).start()
+      }, 1000, Phaser.Easing.Linear.None, true, 500).start()
+      game.add.tween(game.credit).to({
+        alpha: 1
+      }, 1000, Phaser.Easing.Linear.None, true, 500).start()
       game.introBackground.tweenright = game.add.tween(game.introBackground).to({
         "x": -320
       }, 8000, Phaser.Easing.Linear.None).start();
@@ -220,6 +226,7 @@ startIntro = function () {
         game.fadeOut.onComplete.add(function () {
           game.introBackground.alpha = 0;
           game.title.alpha = 0;
+          game.credit.alpha = 0;
           startFirstDialog()
         })
       })
