@@ -1,7 +1,7 @@
 function Wolf(options) {
   wolf = game.add.group();
   wolf.bp = [];
-  wolf.life = 20;
+  wolf.life = 50;
   wolf.phase = 1;
   wolf.preload = function () {
     game.load.image("wolfPawL", 'assets/boss/w_armL.png');
@@ -10,6 +10,7 @@ function Wolf(options) {
     // game.load.atlasJSONHash("wolfPawL", 'assets/boss/wolf_pfote.png', 'assets/boss/wolf_pfote.json');
     game.load.atlasJSONHash("wolfTail", 'assets/boss/w_tail.png', 'assets/boss/w_tail.json');
     game.load.atlasJSONHash("wolfHead2", 'assets/boss/w_s3.png', 'assets/boss/w_s3.json')
+    game.load.image("wolfHeart", "assets/boss/ui_health_boss.png");
     for (var i = 0; i < wolf.bp.length; i++) {
       wolf.bp[i].preload();
     }
@@ -24,7 +25,6 @@ function Wolf(options) {
     this.wolfTail.animations.add('fire');
     this.wolfBooty.idleAnimation = this.wolfBooty.animations.add('idle');
     this.wolfBooty.idleAnimation.delay = 5000;
-
     this.wolfHead.animations.add('idle', ['w_head_idle1.png', 'w_head_idle2.png']);
     this.wolfHead.animations.add('s2', ['w_head_s2_1.png', 'w_head_s2_1.png', 'w_head_s2_1.png', 'w_head_s2_1.png', 'w_head_s2_1.png', 'w_head_s2_1.png', 'w_head_s2_1.png', 'w_head_s2_1.png', 'w_head_s2_1.png', 'w_head_s2_1.png', 'w_head_s2_1.png', 'w_head_s2_2.png', 'w_head_s2_3.png']);
     this.wolfHead.animations.add('s2open', ['w_head_s2_3.png', 'w_head_s2_3.png', 'w_head_s2_3.png']);
@@ -32,7 +32,8 @@ function Wolf(options) {
     this.wolfBooty.tween = {};
     this.wolfHead.tween = {};
     this.wolfTail.tween = {};
-    wolf.wolfHead.angle = 70;
+    this.wolfBooty.tween.dead = {};
+    this.wolfHead.angle = 70;
     this.add(this.wolfPawL);
     this.add(this.wolfBooty);
     this.add(this.wolfHead);
@@ -48,11 +49,21 @@ function Wolf(options) {
       this.bp[i].load();
       this.bp[i].options.parent = this.wolfHead;
     }
+    heartY = 0;
+    this.heart = [];
+    life = this.life / 10;
+    for (var i = 0; i < life; i++) {
+      this.heart[i] = game.add.sprite(game.width - 12, heartY, "wolfHeart");
+      heartY += 10;
+    }
     return true;
   }
   wolf.intro = function () {
     this.introIsRunning = true;
-    this.wolfTail.body.setSize(this.wolfTail.body.width * 0.8, this.wolfTail.body.height * 0.8);
+    this.wolfTail.body.setSize(this.wolfTail.body.width * 0.8, this.wolfTail.body.height);
+    this.wolfBooty.body.setSize(this.wolfBooty.body.width * 0.4, this.wolfBooty.body.height);
+    this.wolfPawL.body.setSize(this.wolfPawL.body.width * 0.1, this.wolfPawL.body.height);
+    this.wolfHead.body.setSize(this.wolfHead.body.width * 0.3, this.wolfHead.body.height);
 
     this.wolfBooty.tween.intro = game.add.tween(this.wolfBooty).to({
       x: game.width - 50,
@@ -61,7 +72,7 @@ function Wolf(options) {
 
     this.wolfHead.tween.intro = game.add.tween(this.wolfHead).to({
       x: game.width - 60,
-      y: game.height * 0.21
+      y: game.height * 0.23
     }, 1000, Phaser.Easing.Sinusoidal.InOut, true, 0);
 
     game.add.tween(this.wolfHead).to({
@@ -144,8 +155,8 @@ function Wolf(options) {
             }
             if (wolfPart.key === "wolfPawL" && wolf.phase === 1) {
               if (wolf.life <= 0) {
-                if (wolf.wolfPawL.tween.dead) {
-                  if (wolf.wolfBooty.tween.dead.isRunning) {
+                if (!!wolf.wolfPawL.tween.dead) {
+                  if (!!wolf.wolfBooty.tween.dead.isRunning) {
                     return false;
                   }
                 }
@@ -155,6 +166,7 @@ function Wolf(options) {
                 hit.play();
                 if (wolf.cry2.isPlaying === false) {
                   wolf.cry1.play();
+                  game.player.bp[1].options.isActiv = true
                 }
                 wolf.wolfHead.angle = 70;
                 game.add.tween(this.wolfHead).to({
@@ -176,15 +188,24 @@ function Wolf(options) {
                 wolf.wolfPawL.tween.dead = game.add.tween(wolf.wolfPawL).to({
                   y: "200"
                 }, 3000, Phaser.Easing.Sinusoidal.Out, true, 0).start()
+                wolf.life = 70;
+                heartY = 0;
+                wolf.heart = [];
+                life = this.life / 10;
+                for (var i = 0; i < life; i++) {
+                  this.heart[i] = game.add.sprite(game.width - 12, heartY, "wolfHeart");
+                  heartY += 10;
+                }
                 wolf.wolfPawL.tween.dead.onComplete.add(function () {
                   wolf.wolfPawL.kill();
                   wolf.phase = 2;
-                  wolf.life = 20;
                 }, this);
               } else {
                 if (wolf.wolfHead.tween.hit && wolf.wolfHead.tween.hit.isRunning === true) {
                   return false;
                 }
+                life = (wolf.life / 10) - 1;
+                wolf.heart[life].alpha = 0;
                 wolf.life -= 10;
                 hit.play();
                 wolf.wolfBooty.tween.hit = game.add.tween(wolf.wolfBooty).to({
@@ -206,8 +227,10 @@ function Wolf(options) {
                 }
                 wolf.wolfBooty.tween.Idle.stop();
                 wolf.wolfTail.tween.attack.stop();
+                wolf.wolfTail.body.setSize(0, 0);
                 if (wolf.cry2.isPlaying === false) {
                   wolf.cry2.play();
+                  game.player.bp[2].options.isActiv = true
                   hit.play();
                 }
                 wolf.wolfHead.tween.Idle.stop();
@@ -228,6 +251,9 @@ function Wolf(options) {
                 wolf.wolfBooty.tween.dead = game.add.tween(wolf.wolfBooty).to({
                   y: "200"
                 }, 3000, Phaser.Easing.Sinusoidal.Out, true, 0).start()
+                game.add.tween(wolf.wolfHead).to({
+                  x: "+20"
+                }, 2000, Phaser.Easing.Sinusoidal.Out).start();
                 wolf.wolfHead.tween.Idle = game.add.tween(wolf.wolfHead).to({
                   y: 90
                 }, 2000, Phaser.Easing.Sinusoidal.Out, true, 50, Infinity, true).start()
@@ -238,8 +264,15 @@ function Wolf(options) {
                     }, 500)
                   }
                 }, 1000)
-                wolf.life = 50;
+                wolf.life = 90;
                 wolf.phase = 3;
+                heartY = 0;
+                wolf.heart = [];
+                life = this.life / 10;
+                for (var i = 0; i < life; i++) {
+                  this.heart[i] = game.add.sprite(game.width - 12, heartY, "wolfHeart");
+                  heartY += 10;
+                }
                 wolf.wolfBooty.tween.dead.onComplete.add(function () {
                   wolf.wolfBooty.kill();
                   wolf.wolfTail.kill();
@@ -251,8 +284,10 @@ function Wolf(options) {
                 if (wolf.wolfHead.tween.hit && wolf.wolfHead.tween.hit.isRunning === true) {
                   return false;
                 }
-                wolf.life -= 10;
                 hit.play();
+                life = (wolf.life / 10) - 1;
+                wolf.heart[life].alpha = 0;
+                wolf.life -= 10;
                 wolf.wolfBooty.tween.hit = game.add.tween(wolf.wolfBooty).to({
                   alpha: 0
                 }, 50, Phaser.Easing.Sinusoidal.Out, true, 50, 2, true).start()
@@ -272,6 +307,18 @@ function Wolf(options) {
                 wolf.wolfHead.tween.rotation = game.add.tween(wolf.wolfHead).to({
                   rotation: 30
                 }, 1000, Phaser.Easing.Sinusoidal.Out, true, 0, 0, false).start();
+                wolf.wolfHead.tween.rotation.onComplete.add(function () {
+                  game.fadeOut = game.add.tween(game.world).to({
+                    alpha: 0
+                  }, 1000, Phaser.Easing.Sinusoidal.Out,true, 1000).start()
+                  game.fadeOut.onComplete.add(function () {
+                    if (game.outroStarted === false) {
+                      startOutro()
+                      game.outroStarted = true;
+                    }
+
+                  })
+                })
                 wolf.wolfHead.tween.dead = game.add.tween(wolf.wolfHead).to({
                   x: "300",
                   y: "300"
@@ -281,6 +328,8 @@ function Wolf(options) {
                   return false;
                 }
                 hit.play();
+                life = (wolf.life / 10) - 1;
+                wolf.heart[life].alpha = 0;
                 wolf.life -= 10;
                 wolf.wolfHead.tween.hit = game.add.tween(wolf.wolfHead).to({
                   alpha: 0
@@ -306,7 +355,7 @@ function Wolf(options) {
       name: "a",
       isActiv: true,
       size: 100,
-      fireRate: 2,
+      fireRate: 1,
       sprite: 'bullet',
       spritesheet: 'assets/tmp/bullet.png',
       spritesheetSize: {
@@ -317,7 +366,7 @@ function Wolf(options) {
         x: -8,
         y: 0,
       },
-      nextShot: 400,
+      nextShot: 200,
       velocity: {
         x: -60,
         y: 0

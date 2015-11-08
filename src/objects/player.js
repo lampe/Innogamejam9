@@ -8,15 +8,24 @@ function Player(options) {
   that.gotHitTween = false;
   that.preload = function () {
     game.load.atlasJSONHash(that.options.name, that.options.path + '.png', that.options.path + '.json');
+    game.load.image("heart", "assets/hero/ui_health1.png");
+    game.load.audio("playerHit", 'assets/audio/playerhit.wav');
     for (var i = 0; i < that.bp.length; i++) {
       that.bp[i].preload();
     }
   }
   that.add = function () {
     that.sprite = game.add.sprite(that.options.position.x, that.options.position.y, that.options.name);
-    for (var i = 0; i < that.bp.length; i++) {
-      that.bp[i].load();
-      that.bp[i].options.parent = that.sprite;
+    that.hitSound = game.add.audio("playerHit");
+      for (var i = 0; i < that.bp.length; i++) {
+        that.bp[i].load();
+        that.bp[i].options.parent = that.sprite;
+      }
+    heartX = 0;
+    that.heart = [];
+    for (var i = 0; i < that.life + 1; i++) {
+      that.heart[i] = game.add.sprite(heartX, 0, "heart");
+      heartX += 10;
     }
     that.sprite.update = that.update;
     that.alive = true;
@@ -96,7 +105,7 @@ function Player(options) {
         game.player.sprite.body.velocity.y = game.player.options.speed;
       }
 
-      if (game.input.keyboard.isDown(Phaser.Keyboard.Z)) {
+      if (game.input.keyboard.isDown(Phaser.Keyboard.S)) {
         that.sprite.animations.play('fire', 10, false);
         for (var i = 0; i < game.player.bp.length; i++) {
           if (game.player.bp[i].options.isActiv) {
@@ -132,7 +141,9 @@ function Player(options) {
     if (game.player.life === 0) {
       game.player.kill()
     } else {
+      game.player.heart[game.player.life].alpha = 0;
       game.player.life -= 1;
+      that.hitSound.play();
       game.player.gotHitTween = game.add.tween(game.player.sprite).to({
         alpha: 0
       }, 100, Phaser.Easing.Sinusoidal.Out, true, 0, 2, true);
@@ -171,37 +182,43 @@ function Player(options) {
         x: 0,
         y: 0
       },
-      nextShot: 400,
+      nextShot: 100,
       velocity: {
-        x: 100,
+        x: 120,
         y: 0
       },
       startSprite: 8
     }));
     this.bp.push(new BulletPool({
+      type: "JSON",
       name: "b",
       size: 100,
-      fireRate: 3,
+      fireRate: 1,
       isActiv: false,
-      sprite: 'bullet',
-      spritesheet: 'assets/tmp/bullet.png',
+      sprite: 'b',
+      spritesheet: 'assets/hero/shot',
       spritesheetSize: {
         x: 32,
         y: 32
       },
-      nextShot: 300,
-      velocity: {
-        x: 100,
+      offset: {
+        x: 0,
         y: 0
+      },
+      nextShot: 100,
+      velocity: {
+        x: 120,
+        y: -30
       },
       startSprite: 8
     }));
     this.bp.push(new BulletPool({
+      type: "JSON",
       name: "c",
       size: 100,
       isActiv: false,
-      sprite: 'bullet',
-      spritesheet: 'assets/tmp/bullet.png',
+      sprite: 'c',
+      spritesheet: 'assets/hero/shot',
       spritesheetSize: {
         x: 32,
         y: 32
@@ -209,7 +226,11 @@ function Player(options) {
       nextShot: 400,
       velocity: {
         x: 60,
-        y: -60
+        y: 30
+      },
+      offset: {
+        x: 0,
+        y: 0
       },
       startSprite: 8
     }));
