@@ -353,11 +353,12 @@ function Wolf(options) {
   wolf.addAllWeapons = function () {
     wolf.bp.push(new BulletPool({
       name: "a",
+      type: "JSON",
       isActiv: true,
       size: 100,
       fireRate: 1,
-      sprite: 'bullet',
-      spritesheet: 'assets/tmp/bullet.png',
+      sprite: 'w3',
+      spritesheet: 'assets/boss/shot_wolf',
       spritesheetSize: {
         x: 32,
         y: 32

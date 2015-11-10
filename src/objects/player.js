@@ -3,7 +3,7 @@ function Player(options) {
   that.options = options;
   that.cursors = game.input.keyboard.createCursorKeys();
   that.alive = false;
-  that.life = 2;
+  that.life = 3;
   that.bp = [];
   that.gotHitTween = false;
   that.preload = function () {

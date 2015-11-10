@@ -89,7 +89,7 @@ var d5 = {
 }
 
 var d6 = {
-  text: ['Hey Ich bins dein', 'AnimalSpirit!!'],
+  text: ['Hey Ich bins dein', 'Spirit Animal!!'],
   cb: function () {
     content = d7.text;
     contentCb = d7.cb;
@@ -168,16 +168,16 @@ function preload() {
   game.load.audio('wolfCry3', ['assets/audio/wolfCry/10.wav']);
   game.load.audio('hit', ['assets/audio/hit.wav']);
   game.load.audio('text', ['assets/audio/text.wav']);
-  game.load.image('title', 'assets/title.png');
-  game.load.image('credit', 'assets/ui_credits_titel_A.png');
 
+  game.load.image('title', 'assets/ui/title.png');
+  game.load.image('credit', 'assets/ui/ui_credits_titel_A.png');
   game.load.image('background1', 'assets/bg/bg1.png');
   game.load.image('background2', 'assets/bg/bg2.png');
   game.load.image('background3', 'assets/bg/fg.png');
   game.load.image('bgInto', 'assets/bg/bg_intro.png');
   game.load.image("bgEnde", 'assets/ende/ende.png');
   game.load.image("pups", 'assets/ende/ende_pups.png');
-  game.load.image("HoboBoys", 'assets/ui_hoboboys.png');
+  game.load.image("HoboBoys", 'assets/ui/ui_hoboboys.png');
 
   // this.load.tilemap('level1', 'assets/tmp/Test-Map.json', null, Phaser.Tilemap.TILED_JSON);
   // this.load.image('gameTiles', 'assets/tmp/KirbysDreamLand_EDIT.png');
@@ -288,7 +288,7 @@ startOutro = function () {
 
       text = game.add.text(4, game.height * 0.8, '', {
         font: "8px pokemon",
-        fill: "black"
+        fill: "rgb(19, 58, 25)"
       });
       game.pDA = game.add.sprite(0, 5, 'pda');
       game.kloDA = game.add.sprite(55, -10, 'klohaus');
@@ -353,7 +353,7 @@ startOutro = function () {
               game.kloEnde.onComplete.add(function () {
                 game.introText = game.add.text(game.width / 2, -10, '', {
                   font: "8px pokemon",
-                  fill: "black"
+                  fill: "rgb(19, 58, 25)"
                 });
                 game.introText.text = "GameDesign\nDimi, Micha";
                 game.introText.position.x = game.width / 2 - game.introText.width / 2;
@@ -426,7 +426,7 @@ startFirstDialog = function () {
 
     text = game.add.text(4, game.height * 0.8, '', {
       font: "8px pokemon",
-      fill: "black"
+      fill: "rgb(19, 58, 25)"
     });
     content = d1.text;
     contentCb = d1.cb;

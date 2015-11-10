@@ -1,0 +1,44 @@
+{"frames": {
+
+"shot_wolf_idle_0.png":
+{
+	"frame": {"x":0,"y":0,"w":8,"h":8},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":8,"h":8},
+	"sourceSize": {"w":8,"h":8}
+},
+"shot_wolf_idle_1.png":
+{
+	"frame": {"x":8,"y":0,"w":8,"h":8},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":8,"h":8},
+	"sourceSize": {"w":8,"h":8}
+},
+"shot_wolf_idle_2.png":
+{
+	"frame": {"x":0,"y":0,"w":8,"h":8},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":8,"h":8},
+	"sourceSize": {"w":8,"h":8}
+},
+"shot_wolf_idle_3.png":
+{
+	"frame": {"x":16,"y":0,"w":6,"h":6},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":1,"w":6,"h":6},
+	"sourceSize": {"w":8,"h":8}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "shot_wolf.png",
+	"format": "RGBA8888",
+	"size": {"w":22,"h":8},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:37687cc877786301ae55ea74cf7f3dc9:696fb28527fe3a89172408805ba16213:600ebdd7b0814a7e8e32a0fb4b896879$"
+}
+}
